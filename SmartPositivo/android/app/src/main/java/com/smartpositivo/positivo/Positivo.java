@@ -42,6 +42,7 @@ public class Positivo extends ReactContextBaseJavaModule {
 
     private PrinterCallback callback = new PrinterCallback() {
         Context context = getReactApplicationContext();
+
         @Override
         public void onError(int i, String s) {
             Toast.makeText(context, s, Toast.LENGTH_LONG).show();
@@ -90,15 +91,32 @@ public class Positivo extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void checkPrint(Promise promise){
-       Boolean isReady =  mPrinter.isReady();
-       promise.resolve(isReady);
+    public void checkPrint(Promise promise) {
+        Boolean isReady = mPrinter.isReady();
+        promise.resolve(isReady);
     }
 
     @ReactMethod
-    public void checkPaper(Promise promise){
+    public void checkPaper(Promise promise) {
         Boolean isPaper = mPrinter.hasPaper(callback);
         promise.resolve(isPaper);
     }
+
+    @ReactMethod
+    public void checkTemperature(Promise promise) {
+        int temperature = mPrinter.printerTemperature(callback);
+        promise.resolve(String.valueOf(temperature));
+    }
+
+    @ReactMethod
+    public void setSpeed(int speed, Promise promise) {
+        try {
+            mPrinter.setPrinterSpeed(speed, callback);
+            promise.resolve("SUCCESS");
+        } catch (Exception e) {
+            promise.reject("ERROR", e.getMessage());
+        }
+    }
+
 
 }

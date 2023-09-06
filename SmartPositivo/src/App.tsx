@@ -76,6 +76,26 @@ function App(): JSX.Element {
       });
   }
 
+  function handleCheckTemperature() {
+    Positivo.checkTemperature()
+      .then((response: any) => {
+        Alert.alert('Temperatura', response);
+      })
+      .catch((error: any) => {
+        Alert.alert('Error', JSON.stringify(error));
+      });
+  }
+
+  function handleSetSpeed() {
+    Positivo.setSpeed(6 as number)
+      .then((response: any) => {
+        Alert.alert('Temperatura', response);
+      })
+      .catch((error: any) => {
+        Alert.alert('Error', JSON.stringify(error));
+      });
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -114,6 +134,16 @@ function App(): JSX.Element {
         style={styles.button}
         onPress={() => handleCheckPaper()}>
         <Text>Check Papel</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleCheckTemperature()}>
+        <Text>Check Temperatura</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => handleSetSpeed()}>
+        <Text>Set Speed</Text>
       </TouchableOpacity>
     </ScrollView>
   );
